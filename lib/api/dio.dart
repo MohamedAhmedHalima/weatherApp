@@ -2,12 +2,7 @@ import 'package:dio/dio.dart';
 
 class DioHelper {
   static Dio? _dio;
-  static const JsonType = 'application/json';
-  static const UrlencodedType = 'application/x-www-form-urlencoded';
-  static const UnauthorizedCode = 401;
   static const InternalServerErrorCode = 500;
-    static const AuthorizationParameter = 'Authorization';
-  static const Bearer = 'Bearer';
 
   static init() {
     _dio = Dio(

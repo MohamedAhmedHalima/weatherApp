@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weathertask/service/bloc/states.dart';
 
 import '../../api/dio.dart';
+import '../../constant/snakbar.dart';
 import '../../model/currentWeatherModel.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:sqflite/sqflite.dart';
@@ -44,15 +45,22 @@ class AppCubit extends Cubit<AppStates> {
 
   CurrentWeatherModel? currentWeatherModel;
 
-  void getWeatherData({ required String city}) async {
+  void getWeatherDataWithPlace({ required String city}) async {
     emit(LoadingData());
     await DioHelper.getData(
         url: "/weather?q=$city&appid=48db3897898723c996eda6f95b1a6d5e&units=metric")
         .then((value) {
       print("value${value.data}");
-      currentWeatherModel = CurrentWeatherModel.fromJson(value.data);
-      print("value value${currentWeatherModel!.wind!.speed}");
-      emit(getDataSucces());
+      if(value.data['cod']=="404"){
+        print(value.data['message']);
+
+        emit(getDataSucces(value.data['message'],value.data['cod']));
+      }else{
+        currentWeatherModel = CurrentWeatherModel.fromJson(value.data);
+        print("${currentWeatherModel!.wind!.speed}");
+        emit(getDataSucces("",""));
+      }
+
     })
         .catchError((error) {
       print("${error.toString()}");
@@ -72,9 +80,15 @@ class AppCubit extends Cubit<AppStates> {
         url: "/weather?lat=$lat&lon=$long&appid=48db3897898723c996eda6f95b1a6d5e&units=metric")
         .then((value) {
       print("value${value.data}");
-      currentWeatherModel = CurrentWeatherModel.fromJson(value.data);
-      print("value value${currentWeatherModel!.wind!.speed}");
-      emit(getDataSucces());
+      if(value.data['cod']=="404"){
+        print(value.data['message']);
+
+        emit(getDataSucces(value.data['message'],value.data['cod']));
+      }else{
+        currentWeatherModel = CurrentWeatherModel.fromJson(value.data);
+        print("value value${currentWeatherModel!.wind!.speed}");
+        emit(getDataSucces("",""));
+      }
     })
         .catchError((error) {
       print("${error.toString()}");

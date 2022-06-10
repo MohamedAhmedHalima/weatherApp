@@ -4,7 +4,7 @@ import 'package:weathertask/api/dio.dart';
 import 'package:weathertask/service/bloc/cubit.dart';
 import 'package:weathertask/service/bloc/states.dart';
 
-import 'modules/cardVew.dart';
+import 'modules/MainPage.dart';
 import 'service/weatherServes.dart';
 
 void main(){
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
     builder: (BuildContext context, AppStates state) {
         return const MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: CardView(),
+          home: MainPage(),
 
         );
     }

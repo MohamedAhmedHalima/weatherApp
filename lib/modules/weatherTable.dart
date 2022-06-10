@@ -45,7 +45,7 @@ Widget  TableTaskes({
 }) =>
     ListView.separated(
         itemBuilder: (context, index) =>
-            rowgetfromdatabase(taske![index], context),
+            rowgetfromdatabase(model: taske![index]),
         separatorBuilder: (context, index) => Padding(
           padding: const EdgeInsetsDirectional.only(start: 20, end: 20),
           child: Container(
